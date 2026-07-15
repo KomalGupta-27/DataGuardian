@@ -1,15 +1,9 @@
 import streamlit as st
-from utils.styles import load_css
 
-st.set_page_config(
-    page_title="Settings",
-    layout="wide"
-)
 
-# load_css()
 
 st.title("Settings")
-st.caption("Configure DataGuardian preferences.")
+st.caption("Configure DataGuardian preferences and application thresholds.")
 
 st.divider()
 
@@ -61,7 +55,7 @@ include_charts = st.checkbox(
 
 st.divider()
 
-st.subheader("Application")
+st.subheader("Application Details")
 
 st.text_input(
     "Default Upload Directory",
@@ -70,18 +64,18 @@ st.text_input(
 )
 
 st.text_input(
-    "Database",
+    "Database Type",
     value="SQLite",
     disabled=True
 )
 
 st.text_input(
-    "Version",
-    value="DataGuardian v1.0",
+    "Build Version",
+    value="DataGuardian v1.0.0",
     disabled=True
 )
 
 st.divider()
 
-if st.button("Save Settings"):
+if st.button("Save Settings", type="primary"):
     st.success("Settings saved successfully.")

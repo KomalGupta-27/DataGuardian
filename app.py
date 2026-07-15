@@ -3,83 +3,33 @@ from utils.styles import load_css
 
 st.set_page_config(
     page_title="DataGuardian",
-    page_icon="🛡️",
-    layout="wide",
-    initial_sidebar_state="expanded"
+    page_icon=None,
+    layout="wide"
 )
 
-# load_css()
+# Load CSS globally — runs once per session on every page load
+load_css()
 
-st.title("DataGuardian")
-st.caption("Enterprise Data Quality & Validation Platform")
+# Define pages with Material Symbols icons for clean, modern sidebar navigation
+welcome_page    = st.Page("app_pages/Welcome.py",         title="Platform Overview",  icon=":material/explore:", default=True)
+dashboard_page  = st.Page("app_pages/Dashboard.py",       title="Risk Dashboard",     icon=":material/analytics:")
+upload_page     = st.Page("app_pages/Upload.py",          title="Dataset Ingestion",  icon=":material/publish:")
+pipeline_page   = st.Page("app_pages/Pipeline_Monitor.py",title="Pipeline Execution", icon=":material/bolt:")
+validation_page = st.Page("app_pages/Validation.py",      title="Validation Center",  icon=":material/verified_user:")
+rules_page      = st.Page("app_pages/Business_Rules.py",  title="Business Rules Run", icon=":material/fact_check:")
+rule_manager    = st.Page("app_pages/Rule_Manager.py",    title="Rule Manager",       icon=":material/rule_folder:")
+reports_page    = st.Page("app_pages/Reports.py",         title="Executive Reports",  icon=":material/description:")
+settings_page   = st.Page("app_pages/Settings.py",        title="System Settings",    icon=":material/settings:")
 
-st.divider()
+# Grouped sidebar navigation
+pg = st.navigation(
+    {
+        "Information":        [welcome_page, dashboard_page],
+        "Operations":         [upload_page, pipeline_page],
+        "Quality Assurance":  [validation_page, rules_page, rule_manager],
+        "Reporting & Config": [reports_page, settings_page],
+    },
+    position="sidebar",
+)
 
-left, right = st.columns([2, 1])
-
-with left:
-    st.markdown("""
-### Welcome
-
-DataGuardian is an enterprise-inspired data quality platform that helps analyze,
-validate and monitor datasets through an interactive workflow.
-
-The application provides:
-
-- Dataset Upload
-- Data Validation
-- Business Rule Engine
-- Quality Score Analysis
-- Report Generation
-- Pipeline Monitoring
-
-Use the navigation panel on the left to begin.
-""")
-
-with right:
-
-    st.metric("Application Version", "v1.0")
-
-    st.metric("Modules", "7")
-
-    st.metric("Status", "Ready")
-
-st.divider()
-
-st.subheader("Workflow")
-
-st.code("""
-Upload Dataset
-      │
-      ▼
-Validate Schema
-      │
-      ▼
-Run Business Rules
-      │
-      ▼
-Calculate Quality Score
-      │
-      ▼
-Generate Reports
-      │
-      ▼
-Export Results
-""", language="text")
-
-st.divider()
-
-c1, c2, c3 = st.columns(3)
-
-with c1:
-    st.info("Dataset Upload")
-
-with c2:
-    st.info("Validation Center")
-
-with c3:
-    st.info("Reports & Pipeline")
-
-st.divider()
-
-st.caption("Built using Python • Streamlit • Pandas • Plotly • SQLite")
+pg.run()
